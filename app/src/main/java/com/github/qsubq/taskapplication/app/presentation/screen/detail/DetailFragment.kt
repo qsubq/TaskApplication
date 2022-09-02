@@ -6,12 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.github.qsubq.taskapplication.R
+import com.github.qsubq.taskapplication.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment() {
+    private lateinit var binding : FragmentDetailBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        return inflater.inflate(R.layout.fragment_detail, container, false)
+        binding = FragmentDetailBinding.inflate(layoutInflater,container,false)
+        return binding.root
     }
 }
