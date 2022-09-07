@@ -14,14 +14,14 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.NavHostFragment
 import com.github.qsubq.taskapplication.R
 import com.github.qsubq.taskapplication.databinding.FragmentTaskBinding
 
 class TaskFragment : Fragment() {
     private lateinit var binding: FragmentTaskBinding
     private val viewModel: TaskViewModel by viewModels()
-    private var hourHeight = 240.0
-    private var dealWidth = 40
+    private var hourHeight = 120.0
 
     @RequiresApi(Build.VERSION_CODES.N)
     private var selectedDate = Calendar.getInstance()
@@ -37,6 +37,13 @@ class TaskFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.btnDetail.setOnClickListener {
+            val navHostFragment =
+                activity?.supportFragmentManager?.findFragmentById(R.id.nav_fragment) as NavHostFragment
+            navHostFragment.navController.navigate(R.id.action_taskFragment_to_detailFragment)
+        }
+
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             selectedDate.set(year, month, dayOfMonth)
             update()
@@ -46,8 +53,8 @@ class TaskFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.N)
     private fun update() {
-
         viewModel.loadData(selectedDate)
+
         val dealsColumns: LinearLayout = binding.dealsColumns
         dealsColumns.removeAllViews()
 
@@ -75,8 +82,11 @@ class TaskFragment : Fragment() {
         dealsColumns.addView(hours)
 
 
-        if (viewModel.tasksLiveData.value?.size != 0) {
-            for (i in viewModel.tasksLiveData.value!!) {
+        if (viewModel.tasks.size != 0) {
+
+            val taskWidth = 1000 / viewModel.tasks.size
+
+            for (i in viewModel.tasks) {
 
                 val dealColumn = LinearLayout(this.context)
                 val lpd = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
@@ -91,7 +101,7 @@ class TaskFragment : Fragment() {
                     LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT)
                 block.layoutParams.height = (hourHeight / 60 * i.timeStart).toInt()
-                block.layoutParams.width = dealWidth
+                block.layoutParams.width = taskWidth
 
                 dealColumn.addView(block)
 
@@ -103,12 +113,13 @@ class TaskFragment : Fragment() {
                     ?.let { deal.setBackgroundColor(it) }
                 deal.layoutParams = lp
                 deal.setPadding(15, 0, 0, 0)
-//                if (i.description != "") deal.text = i.name + "\n--------\n(" + i.description + ")"
-                if (i.description != "") deal.text = getString(R.string.task_desc,i.name,i.description)
+
+                if (i.description != "") deal.text =
+                    getString(R.string.task_desc, i.name, i.description)
                 else deal.text = i.name
                 deal.setTextColor(Color.BLACK)
                 deal.layoutParams.height = (hourHeight / 60 * (i.timeFinish - i.timeStart)).toInt()
-                deal.layoutParams.width = dealWidth
+                deal.layoutParams.width = taskWidth
                 dealColumn.addView(deal)
 
                 val block2 = Space(this.context)
@@ -117,11 +128,10 @@ class TaskFragment : Fragment() {
                     LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT)
                 block2.layoutParams.height = (hourHeight / 60 * (24 * 60 - i.timeFinish)).toInt()
-                block2.layoutParams.width = dealWidth
+                block2.layoutParams.width = taskWidth
 
                 dealColumn.addView(block2)
                 dealsColumns.addView(dealColumn)
-
             }
         }
     }

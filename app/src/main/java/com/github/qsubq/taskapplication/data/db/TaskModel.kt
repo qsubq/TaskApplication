@@ -3,11 +3,12 @@ package com.github.qsubq.taskapplication.data.db
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 import io.realm.annotations.Required
-import io.realm.kotlin.types.annotations.PrimaryKey
+import io.realm.annotations.PrimaryKey
 
 @RealmClass
 open class TaskModel : RealmObject() {
 
+    @Required
     @PrimaryKey
     var id: String? = null
 
