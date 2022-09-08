@@ -16,12 +16,10 @@ class TaskViewModel(application: Application) : AndroidViewModel(application) {
     fun loadData(selectedDate: Calendar) {
 
         if (realm.where(TaskModel::class.java).findAll().size != 0) {
-            println("вот сколько записей " + realm.where(TaskModel::class.java).findAll().size)
             tasks.clear()
             for (i in realm.where(TaskModel::class.java).findAll()
                 .filter { d -> dealInSelectedDay(d, selectedDate) }) {
                 tasks.add(i)
-                println("вот что прочитал " + i.name + " " + i.timeStart + " " + i.timeFinish)
             }
         }
     }

@@ -16,13 +16,9 @@ import androidx.navigation.fragment.NavHostFragment
 import com.github.qsubq.taskapplication.R
 import com.github.qsubq.taskapplication.databinding.FragmentTaskBinding
 
-
 class TaskFragment : Fragment() {
     private lateinit var binding: FragmentTaskBinding
     private val viewModel: TaskViewModel by viewModels()
-    private var hourHeight = 120.0
-
-
     private var selectedDate = Calendar.getInstance()
 
     override fun onCreateView(
@@ -45,97 +41,96 @@ class TaskFragment : Fragment() {
 
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             selectedDate.set(year, month, dayOfMonth)
-            update()
+            updateTasks()
         }
-        update()
+        updateTasks()
     }
 
 
-    private fun update() {
+    private fun updateTasks() {
         viewModel.loadData(selectedDate)
 
         val dealsColumns: LinearLayout = binding.dealsColumns
         dealsColumns.removeAllViews()
 
-        val hours = LinearLayout(this.context)
+        val hoursLL = LinearLayout(this.context)
         val lph = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
             LinearLayout.LayoutParams.WRAP_CONTENT)
-        lph.setMargins(20, 3, 10, 0)
-        hours.layoutParams = lph
-        hours.orientation = LinearLayout.VERTICAL
+        lph.setMargins(18, 3, 10, 0)
+        hoursLL.layoutParams = lph
+        hoursLL.orientation = LinearLayout.VERTICAL
 
         for (i in 0..23) {
-            val hour = TextView(this.context)
+            val hourTV = TextView(this.context)
             val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                 LinearLayout.LayoutParams.WRAP_CONTENT)
             lp.setMargins(0, 0, 0, 0)
-            hour.setBackgroundColor(Color.CYAN)
-            hour.layoutParams = lp
 
-            hour.text = convertIntToTime(i)
-            hour.setTextColor(Color.BLACK)
-            hour.layoutParams.height = hourHeight.toInt()
-            hour.layoutParams.width = 120
-            hours.addView(hour)
+            hourTV.layoutParams = lp
+            hourTV.text = convertIntToTime(i)
+            hourTV.setTextColor(Color.BLACK)
+            hourTV.layoutParams.height = 120
+            hourTV.layoutParams.width = 120
+            hoursLL.addView(hourTV)
         }
-        dealsColumns.addView(hours)
+        dealsColumns.addView(hoursLL)
 
 
         if (viewModel.tasks.size != 0) {
 
-            val taskWidth = 1000 / viewModel.tasks.size
-
             for (i in viewModel.tasks) {
 
-                val dealColumn = LinearLayout(this.context)
+                val taskColumnLL = LinearLayout(this.context)
                 val lpd = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT)
                 lpd.setMargins(0, 3, 5, 0)
-                dealColumn.layoutParams = lpd
-                dealColumn.orientation = LinearLayout.VERTICAL
+                taskColumnLL.layoutParams = lpd
+                taskColumnLL.orientation = LinearLayout.VERTICAL
 
-                val block = Space(this.context)
-                block.setBackgroundColor(Color.MAGENTA)
-                block.layoutParams =
+                val blockStart = Space(this.context)
+                blockStart.setBackgroundColor(Color.MAGENTA)
+                blockStart.layoutParams =
                     LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT)
-                block.layoutParams.height = (hourHeight / 60 * i.timeStart).toInt()
-                block.layoutParams.width = taskWidth
+                blockStart.layoutParams.height = (120 / 60 * i.timeStart)
+                blockStart.layoutParams.width = 800 / viewModel.tasks.size
 
-                dealColumn.addView(block)
+                taskColumnLL.addView(blockStart)
 
-                val deal = TextView(this.context)
+                val taskTV = TextView(this.context)
                 val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT)
                 lp.setMargins(0, 0, 0, 0)
                 this.context?.let { ContextCompat.getColor(it, R.color.teal_lite) }
-                    ?.let { deal.setBackgroundColor(it) }
-                deal.layoutParams = lp
-                deal.setPadding(15, 0, 0, 0)
+                    ?.let { taskTV.setBackgroundColor(it) }
+                taskTV.layoutParams = lp
+                taskTV.setPadding(15, 0, 0, 0)
+                if (i.description != "") taskTV.text = getString(R.string.task_desc, i.name, i.description)
+                else taskTV.text = i.name
+                taskTV.setTextColor(Color.BLACK)
+                taskTV.layoutParams.height = (120 / 60 * (i.timeFinish - i.timeStart))
+                taskTV.layoutParams.width = 800 / viewModel.tasks.size
+                taskColumnLL.addView(taskTV)
 
-                if (i.description != "") deal.text =
-                    getString(R.string.task_desc, i.name, i.description)
-                else deal.text = i.name
-                deal.setTextColor(Color.BLACK)
-                deal.layoutParams.height = (hourHeight / 60 * (i.timeFinish - i.timeStart)).toInt()
-                deal.layoutParams.width = taskWidth
-                dealColumn.addView(deal)
-
-                val block2 = Space(this.context)
-                block2.setBackgroundColor(Color.MAGENTA)
-                block2.layoutParams =
+                val blockFinish = Space(this.context)
+                blockFinish.setBackgroundColor(Color.MAGENTA)
+                blockFinish.layoutParams =
                     LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT)
-                block2.layoutParams.height = (hourHeight / 60 * (24 * 60 - i.timeFinish)).toInt()
-                block2.layoutParams.width = taskWidth
+                blockFinish.layoutParams.height = (120 / 60 * (24 * 60 - i.timeFinish))
+                blockFinish.layoutParams.width = 800 / viewModel.tasks.size
 
-                dealColumn.addView(block2)
-                dealsColumns.addView(dealColumn)
+                taskColumnLL.addView(blockFinish)
+                dealsColumns.addView(taskColumnLL)
             }
         }
     }
 
     private fun convertIntToTime(i: Int): String {
         return if (i < 10) "0$i:00" else "$i:00"
+    }
+
+    private fun addTaskName(){
+
     }
 }

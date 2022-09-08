@@ -6,4 +6,5 @@
     <string name="Description">Описание</string>
     <string name="Name">Название</string>
     <string name="Add">Добавить</string>
+    <string name="Add_task">Добавить заметку</string>
 </resources>
