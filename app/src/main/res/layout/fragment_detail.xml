@@ -4,148 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:launchMode="singleTop"
     tools:context=".app.presentation.screen.detail.DetailFragment">
 
-    <TextView
-        android:id="@+id/tv1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:text="Что?"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="65dp"
         android:layout_marginEnd="20dp"
-        android:ems="10"
-        android:hint="Название"
+        android:hint="@string/Name"
         android:inputType="textPersonName"
-        android:padding="15dp"
+        android:minHeight="48dp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv1"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tv2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:text="Когда?"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewError1" />
 
-    <TextView
-        android:id="@+id/tv3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
-        android:text="Как? Зачем?"
-        android:textSize="24sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewError2" />
-
-    <EditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_desc"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="20dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:inputType="textMultiLine"
-        android:minHeight="150dp"
+        android:hint="@string/Description"
+        android:inputType="textPersonName"
+        android:minHeight="48dp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv3"
-        android:importantForAutofill="no" />
+        app:layout_constraintTop_toBottomOf="@+id/et_name" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_add"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:layout_marginBottom="20dp"
-        android:text="Добавить"
+        android:layout_marginBottom="44dp"
+        android:text="@string/Add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/et_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:padding="15dp"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="120dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="120dp"
+        android:gravity="center"
+        android:padding="8dp"
+        android:textColor="@color/grey_for_text"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.483"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv2" />
+        app:layout_constraintTop_toBottomOf="@+id/et_desc" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/et_time_start"
-        android:layout_width="150dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="10dp"
-        android:ems="10"
+        android:layout_gravity="center"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="4dp"
+        android:gravity="center"
         android:padding="15dp"
+        android:textColor="@color/grey_for_text"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_date" />
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/et_time_end"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text=" — "
+        android:layout_gravity="center"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="28dp"
+        android:gravity="center"
+        android:padding="15dp"
+        android:textColor="@color/grey_for_text"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/et_time_start"
         app:layout_constraintTop_toBottomOf="@+id/et_date" />
 
-    <TextView
-        android:id="@+id/et_time_end"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:ems="10"
-        android:padding="15dp"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/et_date" />
-
-    <TextView
-        android:id="@+id/textViewError1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
-        android:text="Введите название "
-        android:textColor="#FD80B6"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_name" />
-
-    <TextView
-        android:id="@+id/textViewError2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="5dp"
-        android:text="Неверный промежуток"
-        android:textColor="#FD80B6"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_time_start" />
 </androidx.constraintlayout.widget.ConstraintLayout>

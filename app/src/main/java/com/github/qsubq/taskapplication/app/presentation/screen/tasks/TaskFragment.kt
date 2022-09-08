@@ -2,7 +2,6 @@ package com.github.qsubq.taskapplication.app.presentation.screen.tasks
 
 import android.graphics.Color
 import android.icu.util.Calendar
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Space
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -18,12 +16,13 @@ import androidx.navigation.fragment.NavHostFragment
 import com.github.qsubq.taskapplication.R
 import com.github.qsubq.taskapplication.databinding.FragmentTaskBinding
 
+
 class TaskFragment : Fragment() {
     private lateinit var binding: FragmentTaskBinding
     private val viewModel: TaskViewModel by viewModels()
     private var hourHeight = 120.0
 
-    @RequiresApi(Build.VERSION_CODES.N)
+
     private var selectedDate = Calendar.getInstance()
 
     override fun onCreateView(
@@ -34,7 +33,7 @@ class TaskFragment : Fragment() {
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -51,7 +50,7 @@ class TaskFragment : Fragment() {
         update()
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
+
     private fun update() {
         viewModel.loadData(selectedDate)
 
