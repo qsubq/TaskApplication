@@ -1,6 +1,4 @@
-# TaskApplication
-
-This app can showing Rick and Morty character
+# TaskApp
 
 ## Stack:
 - Kotlin
