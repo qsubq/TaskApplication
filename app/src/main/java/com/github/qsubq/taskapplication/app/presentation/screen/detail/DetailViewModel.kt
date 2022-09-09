@@ -2,15 +2,16 @@ package com.github.qsubq.taskapplication.app.presentation.screen.detail
 
 import androidx.lifecycle.ViewModel
 import com.github.qsubq.taskapplication.data.db.TaskModel
+import com.github.qsubq.taskapplication.domain.usecase.SaveTasksUseCase
 import io.realm.Realm
 
 
-class DetailViewModel : ViewModel() {
-    private val realm = Realm.getDefaultInstance()
+class DetailViewModel(private val useCase: SaveTasksUseCase) : ViewModel() {
 
     fun addTask(task: TaskModel) {
-        realm.beginTransaction()
-        realm.copyToRealmOrUpdate(task)
-        realm.commitTransaction()
+        useCase.invoke(task)
+//        realm.beginTransaction()
+//        realm.copyToRealmOrUpdate(task)
+//        realm.commitTransaction()
     }
 }

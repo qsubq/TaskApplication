@@ -15,10 +15,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.github.qsubq.taskapplication.R
 import com.github.qsubq.taskapplication.databinding.FragmentTaskBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class TaskFragment : Fragment() {
     private lateinit var binding: FragmentTaskBinding
-    private val viewModel: TaskViewModel by viewModels()
+    private val viewModel by viewModel<TaskViewModel>()
     private var selectedDate = Calendar.getInstance()
 
     override fun onCreateView(
@@ -76,8 +77,7 @@ class TaskFragment : Fragment() {
         dealsColumns.addView(hoursLL)
 
 
-        if (viewModel.tasks.size != 0) {
-
+        if (viewModel.tasks.isNotEmpty()) {
             for (i in viewModel.tasks) {
 
                 val taskColumnLL = LinearLayout(this.context)

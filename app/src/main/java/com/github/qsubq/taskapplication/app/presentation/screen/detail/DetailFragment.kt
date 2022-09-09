@@ -9,16 +9,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.github.qsubq.taskapplication.R
 import com.github.qsubq.taskapplication.data.db.TaskModel
 import com.github.qsubq.taskapplication.databinding.FragmentDetailBinding
 import com.google.android.material.snackbar.Snackbar
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
-    private val viewModel: DetailViewModel by viewModels()
+    private val viewModel by viewModel<DetailViewModel>()
 
     private var dateAndTimeStart: Calendar = Calendar.getInstance()
     private var dateAndTimeFinish: Calendar = Calendar.getInstance()
