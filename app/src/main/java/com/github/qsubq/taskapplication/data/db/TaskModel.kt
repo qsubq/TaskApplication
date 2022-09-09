@@ -15,7 +15,7 @@ open class TaskModel : RealmObject() {
     @Required
     var name: String? = null
 
-    var color: String? = null
+    var color: Int? = null
     var timeStart: Int = 0
     var timeFinish: Int = 0
     var date: String? = null

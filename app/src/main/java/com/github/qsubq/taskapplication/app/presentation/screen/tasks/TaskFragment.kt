@@ -11,11 +11,11 @@ import android.widget.Space
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.NavHostFragment
 import com.github.qsubq.taskapplication.R
 import com.github.qsubq.taskapplication.databinding.FragmentTaskBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class TaskFragment : Fragment() {
     private lateinit var binding: FragmentTaskBinding
@@ -39,7 +39,6 @@ class TaskFragment : Fragment() {
                 activity?.supportFragmentManager?.findFragmentById(R.id.nav_fragment) as NavHostFragment
             navHostFragment.navController.navigate(R.id.action_taskFragment_to_detailFragment)
         }
-
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             selectedDate.set(year, month, dayOfMonth)
             updateTasks()
@@ -50,7 +49,6 @@ class TaskFragment : Fragment() {
 
     private fun updateTasks() {
         viewModel.loadData(selectedDate)
-
         val dealsColumns: LinearLayout = binding.dealsColumns
         dealsColumns.removeAllViews()
 
@@ -79,7 +77,6 @@ class TaskFragment : Fragment() {
 
         if (viewModel.tasks.isNotEmpty()) {
             for (i in viewModel.tasks) {
-
                 val taskColumnLL = LinearLayout(this.context)
                 val lpd = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT)
@@ -88,7 +85,6 @@ class TaskFragment : Fragment() {
                 taskColumnLL.orientation = LinearLayout.VERTICAL
 
                 val blockStart = Space(this.context)
-                blockStart.setBackgroundColor(Color.MAGENTA)
                 blockStart.layoutParams =
                     LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT)
@@ -101,11 +97,12 @@ class TaskFragment : Fragment() {
                 val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
                     LinearLayout.LayoutParams.WRAP_CONTENT)
                 lp.setMargins(0, 0, 0, 0)
-                this.context?.let { ContextCompat.getColor(it, R.color.teal_lite) }
+                this.context?.let { i.color?.let { it1 -> ContextCompat.getColor(it, it1) } }
                     ?.let { taskTV.setBackgroundColor(it) }
                 taskTV.layoutParams = lp
                 taskTV.setPadding(15, 0, 0, 0)
-                if (i.description != "") taskTV.text = getString(R.string.task_desc, i.name, i.description)
+                if (i.description != "") taskTV.text =
+                    getString(R.string.task_desc, i.name, i.description)
                 else taskTV.text = i.name
                 taskTV.setTextColor(Color.BLACK)
                 taskTV.layoutParams.height = (120 / 60 * (i.timeFinish - i.timeStart))
@@ -113,7 +110,6 @@ class TaskFragment : Fragment() {
                 taskColumnLL.addView(taskTV)
 
                 val blockFinish = Space(this.context)
-                blockFinish.setBackgroundColor(Color.MAGENTA)
                 blockFinish.layoutParams =
                     LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT)
@@ -128,9 +124,5 @@ class TaskFragment : Fragment() {
 
     private fun convertIntToTime(i: Int): String {
         return if (i < 10) "0$i:00" else "$i:00"
-    }
-
-    private fun addTaskName(){
-
     }
 }

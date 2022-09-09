@@ -15,6 +15,7 @@ import com.github.qsubq.taskapplication.data.db.TaskModel
 import com.github.qsubq.taskapplication.databinding.FragmentDetailBinding
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
@@ -48,6 +49,7 @@ class DetailFragment : Fragment() {
 
         task.name = binding.etName.text.toString()
         task.description = binding.etDesc.text.toString()
+        task.color = getRandomColor()
 
         task.date = DateUtils.formatDateTime(
             this.context,
@@ -56,7 +58,7 @@ class DetailFragment : Fragment() {
 
         task.timeStart = dateAndTimeStart.get(Calendar.MILLISECONDS_IN_DAY) / 1000 / 60
         task.timeFinish = dateAndTimeFinish.get(Calendar.MILLISECONDS_IN_DAY) / 1000 / 60
-        task.id = java.util.UUID.randomUUID().toString()
+        task.id = UUID.randomUUID().toString()
 
         if (task.timeStart >= task.timeFinish || task.name == "") {
 
@@ -162,6 +164,17 @@ class DetailFragment : Fragment() {
             dateAndTimeStart.set(Calendar.DAY_OF_MONTH, dayOfMonth)
             setInitialDate()
         }
-
-
+    private fun getRandomColor(): Int {
+        return when (Random().nextInt(6)) {
+            0 -> R.color.blue_100
+            1 -> R.color.blue_300
+            2 -> R.color.red
+            3 -> R.color.orange
+            4 -> R.color.yellow
+            5 -> R.color.purple
+            else -> {
+                R.color.green
+            }
+        }
+    }
 }
