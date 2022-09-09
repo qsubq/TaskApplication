@@ -67,7 +67,6 @@ class TaskFragment : Fragment() {
 
             hourTV.layoutParams = lp
             hourTV.text = convertIntToTime(i)
-            hourTV.setTextColor(Color.BLACK)
             hourTV.layoutParams.height = 120
             hourTV.layoutParams.width = 120
             hoursLL.addView(hourTV)
@@ -104,7 +103,6 @@ class TaskFragment : Fragment() {
                 if (i.description != "") taskTV.text =
                     getString(R.string.task_desc, i.name, i.description)
                 else taskTV.text = i.name
-                taskTV.setTextColor(Color.BLACK)
                 taskTV.layoutParams.height = (120 / 60 * (i.timeFinish - i.timeStart))
                 taskTV.layoutParams.width = 800 / viewModel.tasks.size
                 taskColumnLL.addView(taskTV)
