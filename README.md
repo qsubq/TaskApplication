@@ -7,6 +7,7 @@
 - Realm
 - Koin
 - Single activity
+- Mockito
 
 ## Screens:
 
