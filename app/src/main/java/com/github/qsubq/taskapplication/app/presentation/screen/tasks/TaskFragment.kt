@@ -1,6 +1,5 @@
 package com.github.qsubq.taskapplication.app.presentation.screen.tasks
 
-import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +14,6 @@ import androidx.navigation.fragment.NavHostFragment
 import com.github.qsubq.taskapplication.R
 import com.github.qsubq.taskapplication.databinding.FragmentTaskBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
 
 class TaskFragment : Fragment() {
     private lateinit var binding: FragmentTaskBinding

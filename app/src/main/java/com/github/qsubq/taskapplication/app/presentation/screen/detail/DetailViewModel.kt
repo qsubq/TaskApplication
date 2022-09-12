@@ -7,11 +7,7 @@ import io.realm.Realm
 
 
 class DetailViewModel(private val useCase: SaveTasksUseCase) : ViewModel() {
-
     fun addTask(task: TaskModel) {
         useCase.invoke(task)
-//        realm.beginTransaction()
-//        realm.copyToRealmOrUpdate(task)
-//        realm.commitTransaction()
     }
 }
