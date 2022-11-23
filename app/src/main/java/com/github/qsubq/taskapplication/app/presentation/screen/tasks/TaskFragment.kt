@@ -14,6 +14,10 @@ import com.github.qsubq.taskapplication.R
 import com.github.qsubq.taskapplication.databinding.FragmentTaskBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+private const val layoutSize = 120
+private const val layoutHeight = layoutSize / 60
+private const val blockWidth = 800
+
 class TaskFragment : Fragment() {
     private lateinit var binding: FragmentTaskBinding
     private val viewModel by viewModel<TaskViewModel>()
@@ -69,8 +73,8 @@ class TaskFragment : Fragment() {
             with(hourTV) {
                 layoutParams = lp
                 text = convertIntToTime(i)
-                layoutParams.height = 120
-                layoutParams.width = 120
+                layoutParams.height = layoutSize
+                layoutParams.width = layoutSize
             }
 
 
@@ -96,8 +100,8 @@ class TaskFragment : Fragment() {
                         LinearLayout.LayoutParams.WRAP_CONTENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
-                blockStart.layoutParams.height = (120 / 60 * i.timeStart)
-                blockStart.layoutParams.width = 800 / viewModel.tasks.size
+                blockStart.layoutParams.height = (layoutHeight * i.timeStart)
+                blockStart.layoutParams.width = blockWidth / viewModel.tasks.size
 
                 taskColumnLL.addView(blockStart)
 
@@ -115,8 +119,8 @@ class TaskFragment : Fragment() {
                 if (i.description != "") taskTV.text =
                     getString(R.string.task_desc, i.name, i.description)
                 else taskTV.text = i.name
-                taskTV.layoutParams.height = (120 / 60 * (i.timeFinish - i.timeStart))
-                taskTV.layoutParams.width = 800 / viewModel.tasks.size
+                taskTV.layoutParams.height = (layoutHeight * (i.timeFinish - i.timeStart))
+                taskTV.layoutParams.width = blockWidth / viewModel.tasks.size
                 taskColumnLL.addView(taskTV)
 
                 val blockFinish = Space(this.context)
@@ -125,8 +129,8 @@ class TaskFragment : Fragment() {
                         LinearLayout.LayoutParams.MATCH_PARENT,
                         LinearLayout.LayoutParams.WRAP_CONTENT
                     )
-                blockFinish.layoutParams.height = (120 / 60 * (24 * 60 - i.timeFinish))
-                blockFinish.layoutParams.width = 800 / viewModel.tasks.size
+                blockFinish.layoutParams.height = (layoutHeight * (24 * 60 - i.timeFinish))
+                blockFinish.layoutParams.width = blockWidth / viewModel.tasks.size
 
                 taskColumnLL.addView(blockFinish)
                 dealsColumns.addView(taskColumnLL)
