@@ -22,9 +22,11 @@ class TaskRepositoryImpl(private val context: Context,private val realm: Realm) 
     }
 
     override fun saveTask(task: TaskModel) {
-        realm.beginTransaction()
-        realm.copyToRealmOrUpdate(task)
-        realm.commitTransaction()
+        with(realm){
+            beginTransaction()
+            copyToRealmOrUpdate(task)
+            commitTransaction()
+        }
     }
 
     private fun dealInSelectedDay(d: TaskModel, selectedDate: Calendar): Boolean {

@@ -38,10 +38,13 @@ class DetailFragment : Fragment() {
         setInitialTimeStart()
         setInitialTimeEnd()
 
-        binding.etTimeStart.setOnClickListener { setTimeStart() }
-        binding.etTimeEnd.setOnClickListener { setTimeEnd() }
-        binding.btnAdd.setOnClickListener { addData() }
-        binding.etDate.setOnClickListener { setDate() }
+        with(binding) {
+            etTimeStart.setOnClickListener { setTimeStart() }
+            etTimeEnd.setOnClickListener { setTimeEnd() }
+            btnAdd.setOnClickListener { addData() }
+            etDate.setOnClickListener { setDate() }
+        }
+
     }
 
     private fun addData() {
@@ -54,7 +57,8 @@ class DetailFragment : Fragment() {
         task.date = DateUtils.formatDateTime(
             this.context,
             dateAndTimeStart.timeInMillis,
-            DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR)
+            DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR
+        )
 
         task.timeStart = dateAndTimeStart.get(Calendar.MILLISECONDS_IN_DAY) / 1000 / 60
         task.timeFinish = dateAndTimeFinish.get(Calendar.MILLISECONDS_IN_DAY) / 1000 / 60
@@ -64,15 +68,19 @@ class DetailFragment : Fragment() {
 
             if (task.timeStart >= task.timeFinish)
                 view?.let {
-                    Snackbar.make(it,
+                    Snackbar.make(
+                        it,
                         "Time start cannon be more than time finish",
-                        Snackbar.LENGTH_LONG).show()
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
             if (task.name == "")
                 view?.let {
-                    Snackbar.make(it,
+                    Snackbar.make(
+                        it,
                         "Task name cannot be empty",
-                        Snackbar.LENGTH_LONG).show()
+                        Snackbar.LENGTH_LONG
+                    ).show()
                 }
         } else {
             try {
@@ -145,25 +153,32 @@ class DetailFragment : Fragment() {
 
     private var t1 =
         TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-            dateAndTimeStart.set(Calendar.HOUR_OF_DAY, hourOfDay)
-            dateAndTimeStart.set(Calendar.MINUTE, minute)
+            with(dateAndTimeStart) {
+                set(Calendar.HOUR_OF_DAY, hourOfDay)
+                set(Calendar.MINUTE, minute)
+            }
             setInitialTimeStart()
         }
 
     private var t2 =
         TimePickerDialog.OnTimeSetListener { _, hourOfDay, minute ->
-            dateAndTimeFinish.set(Calendar.HOUR_OF_DAY, hourOfDay)
-            dateAndTimeFinish.set(Calendar.MINUTE, minute)
+            with(dateAndTimeFinish) {
+                set(Calendar.HOUR_OF_DAY, hourOfDay)
+                set(Calendar.MINUTE, minute)
+            }
             setInitialTimeEnd()
         }
 
     private var d =
         DatePickerDialog.OnDateSetListener { _, year, monthOfYear, dayOfMonth ->
-            dateAndTimeStart.set(Calendar.YEAR, year)
-            dateAndTimeStart.set(Calendar.MONTH, monthOfYear)
-            dateAndTimeStart.set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            with(dateAndTimeStart) {
+                set(Calendar.YEAR, year)
+                set(Calendar.MONTH, monthOfYear)
+                set(Calendar.DAY_OF_MONTH, dayOfMonth)
+            }
             setInitialDate()
         }
+
     private fun getRandomColor(): Int {
         return when (Random().nextInt(6)) {
             0 -> R.color.blue_100

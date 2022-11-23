@@ -51,22 +51,30 @@ class TaskFragment : Fragment() {
         dealsColumns.removeAllViews()
 
         val hoursLL = LinearLayout(this.context)
-        val lph = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT)
+        val lph = LinearLayout.LayoutParams(
+            LinearLayout.LayoutParams.WRAP_CONTENT,
+            LinearLayout.LayoutParams.WRAP_CONTENT
+        )
         lph.setMargins(18, 3, 10, 0)
         hoursLL.layoutParams = lph
         hoursLL.orientation = LinearLayout.VERTICAL
 
         for (i in 0..23) {
             val hourTV = TextView(this.context)
-            val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT)
+            val lp = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            )
             lp.setMargins(0, 0, 0, 0)
 
-            hourTV.layoutParams = lp
-            hourTV.text = convertIntToTime(i)
-            hourTV.layoutParams.height = 120
-            hourTV.layoutParams.width = 120
+            with(hourTV) {
+                layoutParams = lp
+                text = convertIntToTime(i)
+                layoutParams.height = 120
+                layoutParams.width = 120
+            }
+
+
             hoursLL.addView(hourTV)
         }
         dealsColumns.addView(hoursLL)
@@ -75,24 +83,30 @@ class TaskFragment : Fragment() {
         if (viewModel.tasks.isNotEmpty()) {
             for (i in viewModel.tasks) {
                 val taskColumnLL = LinearLayout(this.context)
-                val lpd = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT)
+                val lpd = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
                 lpd.setMargins(0, 3, 5, 0)
                 taskColumnLL.layoutParams = lpd
                 taskColumnLL.orientation = LinearLayout.VERTICAL
 
                 val blockStart = Space(this.context)
                 blockStart.layoutParams =
-                    LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT)
+                    LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
                 blockStart.layoutParams.height = (120 / 60 * i.timeStart)
                 blockStart.layoutParams.width = 800 / viewModel.tasks.size
 
                 taskColumnLL.addView(blockStart)
 
                 val taskTV = TextView(this.context)
-                val lp = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-                    LinearLayout.LayoutParams.WRAP_CONTENT)
+                val lp = LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT
+                )
                 lp.setMargins(0, 0, 0, 0)
                 this.context?.let { i.color?.let { it1 -> ContextCompat.getColor(it, it1) } }
                     ?.let { taskTV.setBackgroundColor(it) }
@@ -107,8 +121,10 @@ class TaskFragment : Fragment() {
 
                 val blockFinish = Space(this.context)
                 blockFinish.layoutParams =
-                    LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT)
+                    LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
                 blockFinish.layoutParams.height = (120 / 60 * (24 * 60 - i.timeFinish))
                 blockFinish.layoutParams.width = 800 / viewModel.tasks.size
 
