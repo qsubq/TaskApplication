@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Space
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import com.github.qsubq.taskapplication.R
@@ -108,8 +107,9 @@ class TaskFragment : Fragment() {
                     LinearLayout.LayoutParams.WRAP_CONTENT
                 )
                 lp.setMargins(0, 0, 0, 0)
-                this.context?.let { i.color?.let { it1 -> ContextCompat.getColor(it, it1) } }
-                    ?.let { taskTV.setBackgroundColor(it) }
+
+                i.color?.let { taskTV.setBackgroundColor(it) }
+
                 taskTV.layoutParams = lp
                 taskTV.setPadding(15, 0, 0, 0)
                 if (i.description != "") taskTV.text =

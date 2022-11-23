@@ -2,6 +2,7 @@ package com.github.qsubq.taskapplication.app.presentation.screen.detail
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.graphics.Color
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.text.format.DateUtils
@@ -50,19 +51,19 @@ class DetailFragment : Fragment() {
     private fun addData() {
         val task = TaskModel()
 
-        task.name = binding.etName.text.toString()
-        task.description = binding.etDesc.text.toString()
-        task.color = getRandomColor()
-
-        task.date = DateUtils.formatDateTime(
-            this.context,
-            dateAndTimeStart.timeInMillis,
-            DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR
-        )
-
-        task.timeStart = dateAndTimeStart.get(Calendar.MILLISECONDS_IN_DAY) / 1000 / 60
-        task.timeFinish = dateAndTimeFinish.get(Calendar.MILLISECONDS_IN_DAY) / 1000 / 60
-        task.id = UUID.randomUUID().toString()
+        with(task){
+            name = binding.etName.text.toString()
+            description = binding.etDesc.text.toString()
+            color = getRandomColor()
+            date = DateUtils.formatDateTime(
+                requireActivity(),
+                dateAndTimeStart.timeInMillis,
+                DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR
+            )
+            timeStart = dateAndTimeStart.get(Calendar.MILLISECONDS_IN_DAY) / 1000 / 60
+            timeFinish = dateAndTimeFinish.get(Calendar.MILLISECONDS_IN_DAY) / 1000 / 60
+            id = UUID.randomUUID().toString()
+        }
 
         if (task.timeStart >= task.timeFinish || task.name == "") {
 
@@ -180,16 +181,7 @@ class DetailFragment : Fragment() {
         }
 
     private fun getRandomColor(): Int {
-        return when (Random().nextInt(6)) {
-            0 -> R.color.blue_100
-            1 -> R.color.blue_300
-            2 -> R.color.red
-            3 -> R.color.orange
-            4 -> R.color.yellow
-            5 -> R.color.purple
-            else -> {
-                R.color.green
-            }
-        }
+        val rnd = Random()
+        return Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
     }
 }
