@@ -10,18 +10,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.fragment.findNavController
 import com.github.qsubq.taskapplication.R
+import com.github.qsubq.taskapplication.app.presentation.utils.showToast
 import com.github.qsubq.taskapplication.data.db.TaskModel
 import com.github.qsubq.taskapplication.databinding.FragmentDetailBinding
-import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class DetailFragment : Fragment() {
     private lateinit var binding: FragmentDetailBinding
     private val viewModel by viewModel<DetailViewModel>()
-
     private var dateAndTimeStart: Calendar = Calendar.getInstance()
     private var dateAndTimeFinish: Calendar = Calendar.getInstance()
 
@@ -51,7 +50,7 @@ class DetailFragment : Fragment() {
     private fun addData() {
         val task = TaskModel()
 
-        with(task){
+        with(task) {
             name = binding.etName.text.toString()
             description = binding.etDesc.text.toString()
             color = getRandomColor()
@@ -65,36 +64,21 @@ class DetailFragment : Fragment() {
             id = UUID.randomUUID().toString()
         }
 
+
         if (task.timeStart >= task.timeFinish || task.name == "") {
-
-            if (task.timeStart >= task.timeFinish)
+            if (task.timeStart >= task.timeFinish) {
                 view?.let {
-                    Snackbar.make(
-                        it,
-                        "Time start cannon be more than time finish",
-                        Snackbar.LENGTH_LONG
-                    ).show()
+                    showToast("Time start cannot be more than time finish")
                 }
-            if (task.name == "")
+            } else {
                 view?.let {
-                    Snackbar.make(
-                        it,
-                        "Task name cannot be empty",
-                        Snackbar.LENGTH_LONG
-                    ).show()
+                    showToast("Task name cannot be empty")
                 }
-        } else {
-            try {
-                viewModel.addTask(task)
-            } catch (error: Exception) {
-                println(error)
-                view?.let { Snackbar.make(it, error.toString(), Snackbar.LENGTH_LONG).show() }
             }
-            val navHostFragment =
-                activity?.supportFragmentManager?.findFragmentById(R.id.nav_fragment) as NavHostFragment
-            navHostFragment.navController.navigate(R.id.action_detailFragment_to_taskFragment)
+        } else {
+            viewModel.addTask(task)
+            findNavController().navigate(R.id.action_detailFragment_to_taskFragment)
         }
-
     }
 
     private fun setDate() {
@@ -104,8 +88,7 @@ class DetailFragment : Fragment() {
                 dateAndTimeStart.get(Calendar.YEAR),
                 dateAndTimeStart.get(Calendar.MONTH),
                 dateAndTimeStart.get(Calendar.DAY_OF_MONTH)
-            )
-                .show()
+            ).show()
         }
     }
 
@@ -114,8 +97,7 @@ class DetailFragment : Fragment() {
             this.context, t1,
             dateAndTimeStart.get(Calendar.HOUR_OF_DAY),
             dateAndTimeStart.get(Calendar.MINUTE), true
-        )
-            .show()
+        ).show()
     }
 
     private fun setTimeEnd() {
@@ -123,8 +105,7 @@ class DetailFragment : Fragment() {
             this.context, t2,
             dateAndTimeFinish.get(Calendar.HOUR_OF_DAY),
             dateAndTimeFinish.get(Calendar.MINUTE), true
-        )
-            .show()
+        ).show()
     }
 
     private fun setInitialDate() {
